@@ -11,11 +11,11 @@ class LandingPage extends Component {
     handleSearchChangeDelay;
     constructor(props) {
         super(props);
-        this.handleSearchChange = _.debounce((searchTerm) => { 
+        this.handleSearchChange = _.debounce((searchTerm) => {
             this.setState({ searchTerm });
             this.makeRequest()
         }, 500);
-            
+
         this.handleFormSubmission = this.handleFormSubmission.bind(this);
 
         this.state = {
@@ -28,13 +28,14 @@ class LandingPage extends Component {
     makeRequest() {
         const url = `https://business-directory-backend.herokuapp.com/api/businesses/search?term=${this.state.searchTerm}`;
 
-        this.setState({searchLoading: true});
+        this.setState({ searchLoading: true });
+        this.setState({ searchResult: [] })
         getRequest(url)
             .then(res => {
-                this.setState({searchResult: res.data.data});
-                this.setState({searchLoading: false});
+                this.setState({ searchResult: res.data.data });
+                this.setState({ searchLoading: false });
             })
-            .catch(e => { console.log(e);  this.setState({searchLoading: false}); });
+            .catch(e => { console.log(e); this.setState({ searchLoading: false }); });
     }
 
     handleFormSubmission(event) {
@@ -69,17 +70,21 @@ class LandingPage extends Component {
                                     <h1 className="text-light text-center mb-0" style={{ fontSize: '48px' }}>Find that business <span className="font-weight-bold">now</span>.</h1>
 
                                     {/* Autocomplete Search */}
-                                    <div className="container mt-3">
+                                    <div className="container mt-3 position-relative">
                                         <div className="row">
                                             <div className="col">
-                                                <form className="w-100 d-flex justify-content-between" onSubmit={this.handleFormSubmission}>
+                                                <form className="w-100 d-flex justify-content-between" autoComplete="off" onSubmit={this.handleFormSubmission}>
                                                     <input type="search" name="searchTerm" placeholder="Search a business" className="search px-3" onChange={e => this.handleSearchChange(e.target.value)} />
                                                     <button className="btn bg-primary2 text-white w-20 search-button">Search</button>
                                                 </form>
                                             </div>
                                         </div>
-                                        <div>
-                                            <RenderLists list={this.state.searchResult} loading={this.state.searchLoading} />
+                                        <div className="row position-absolute w-100">
+                                            <div className="col">
+                                                <div className=" w-80">
+                                                    <RenderLists list={this.state.searchResult} loading={this.state.searchLoading} />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
