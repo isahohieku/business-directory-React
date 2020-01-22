@@ -64,27 +64,75 @@ class BusinessComponent extends Component {
           </div>
         </div>
 
-        <div className="container">
+        {/* Basic Meta */}
+        <div className="container neg-margin bg-lights py-3">
           <div className="row d-flex justify-content-end">
-            <div className="col-3">
-              <p>Created On</p>
-              <p></p>
+            <div className="col-3 d-flex align-items-center">
+              <div>
+                <p className="text-secondary text-left mb-0 font-weight-bold text-uppercase">Email</p>
+                <p className="text-secondary text-left mb-0"><i className="fas fa-envelope"></i> {this.state.data.email}</p>
+              </div>
             </div>
-            <div className="col-3">
+            <div className="col-3 d-flex align-items-center">
+              <div>
+                <p className="text-secondary text-left mb-0 font-weight-bold text-uppercase">Phone</p>
+                <p className="text-secondary text-left mb-0"><i className="fas fa-phone fa-rotate-90"></i> {this.state.data.phone}</p>
+              </div>
+            </div>
+            <div className="col-3 d-flex align-items-center">
+              <div>
+                <p className="text-secondary text-left mb-0 font-weight-bold text-uppercase">Created on</p>
+                <p className="text-secondary text-left mb-0"><i className="fas fa-clock"></i> {this.getCreatedDate()}</p>
+              </div>
+            </div>
+          </div>
+        </div>
 
+        {/* About business Section */}
+        <div className="container py-4 bg-lights box-shadow-2 mt-3">
+          <div className="row">
+            <div className="col">
+              <p className="font-weight-bold text-left">About {this.state.data.name}</p>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col px-5">
+              <p className="text-left">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni maxime, aut blanditiis odit dolores excepturi molestiae! Non iste voluptatum omnis sed eius vitae provident suscipit, nihil esse. Amet, vel eum.
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate, eum quam inventore soluta, obcaecati, perferendis dolorem cumque dignissimos autem corporis laborum repellendus? Doloribus ipsa ex natus vitae alias, cupiditate assumenda?
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Business categories section */}
+        <div className="container py-4 bg-lights box-shadow-2 mt-3">
+          <div className="row">
+            <div className="col">
+              <p className="font-weight-bold text-left">Business categories</p>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col px-5">
+              <p className="text-left">
+                <span class="badge badge-pill badge-light p-2">Web development</span>
+                <span class="badge badge-pill badge-light p-2">Web design</span>
+                <span class="badge badge-pill badge-light p-2">Engineering</span>
+
+              </p>
             </div>
           </div>
         </div>
 
         {/* All Images Section */}
-        <div className="container box-shadow py-3">
+        <div className="container box-shadow-2 py-3 mt-3 bg-lights">
           <div className="row">
             <div className="col">
               <p className="font-weight-bold text-left">All photos</p>
             </div>
           </div>
           <div className="row mt-3">
-            <div className="col px-3">
+            <div className="col px-5">
               <div className="container">
                 <div className="row">
                   {this.getImages()}
@@ -113,6 +161,11 @@ class BusinessComponent extends Component {
         </React.Fragment>
       )
     })
+  }
+
+  getCreatedDate() {
+    const date = new Date(this.state.data.createdAt);
+    return date.toLocaleDateString();
   }
 }
 
