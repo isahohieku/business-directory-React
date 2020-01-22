@@ -115,6 +115,11 @@ class LandingPage extends Component {
                                 </div>
                             </div>
                         </main>
+
+                        {/* Second section */}
+                        <section>
+                            
+                        </section>
                     </div>
                 </div>
             </div>
