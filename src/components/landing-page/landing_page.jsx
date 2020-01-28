@@ -26,7 +26,8 @@ class LandingPage extends Component {
     }
 
     makeRequest() {
-        const url = `https://business-directory-backend.herokuapp.com/api/businesses/search?term=${this.state.searchTerm}`;
+        // const url = `https://business-directory-backend.herokuapp.com/api/businesses/search?term=${this.state.searchTerm}`;
+        const url = `http://localhost:4000/api/businesses/search?term=${this.state.searchTerm}`;
 
         this.setState({ searchLoading: true });
         this.setState({ searchResult: [] })

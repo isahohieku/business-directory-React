@@ -5,8 +5,10 @@ import './business.Style.scss';
 class BusinessComponent extends Component {
   state = {
     data: {},
+    contact: {},
     avatar: 'https://placeimg.com/200/200/any',
-    images: []
+    images: [],
+    categories: []
   };
 
   constructor(props) {
@@ -15,7 +17,8 @@ class BusinessComponent extends Component {
 
   componentDidMount() {
     const { id } = this.props.match.params;
-    const url = `https://business-directory-backend.herokuapp.com/api/businesses?id=${id}`;
+    // const url = `https://business-directory-backend.herokuapp.com/api/businesses?id=${id}`;
+    const url = `http://localhost:4000/api/businesses?id=${id}`;
 
     getRequest(url)
       .then(res => {
@@ -23,7 +26,8 @@ class BusinessComponent extends Component {
         this.setState({ data });
         this.setState({ avatar: res.data.data.images[0].imageUrl });
         this.setState({ images: res.data.data.images });
-        console.log(res.data.data);
+        this.setState({ contact: res.data.data.contact });
+        this.setState({ categories: res.data.data.categories });
       })
       .catch(e => console.log(e));
   }
@@ -34,7 +38,7 @@ class BusinessComponent extends Component {
         <div className="container mt-5 px-0">
           <div className="row">
             <div className="col">
-              <div className="w-100 px-4 center_screen header linear_bg">
+              <div className="w-100 px-4 center_screen header linear_bg box-shadow-inner">
                 {/* Meta */}
                 <div className="d-flex align-items-end h-100">
                   <div className="more-left">
@@ -70,13 +74,13 @@ class BusinessComponent extends Component {
             <div className="col-3 d-flex align-items-center">
               <div>
                 <p className="text-secondary text-left mb-0 font-weight-bold text-uppercase">Email</p>
-                <p className="text-secondary text-left mb-0"><i className="fas fa-envelope"></i> {this.state.data.email}</p>
+                <p className="text-secondary text-left mb-0"><i className="fas fa-envelope"></i> {this.state.contact.email}</p>
               </div>
             </div>
             <div className="col-3 d-flex align-items-center">
               <div>
                 <p className="text-secondary text-left mb-0 font-weight-bold text-uppercase">Phone</p>
-                <p className="text-secondary text-left mb-0"><i className="fas fa-phone fa-rotate-90"></i> {this.state.data.phone}</p>
+                <p className="text-secondary text-left mb-0"><i className="fas fa-phone fa-rotate-90"></i> {this.state.contact.phone}</p>
               </div>
             </div>
             <div className="col-3 d-flex align-items-center">
@@ -98,8 +102,7 @@ class BusinessComponent extends Component {
           <div className="row">
             <div className="col px-5">
               <p className="text-left">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni maxime, aut blanditiis odit dolores excepturi molestiae! Non iste voluptatum omnis sed eius vitae provident suscipit, nihil esse. Amet, vel eum.
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate, eum quam inventore soluta, obcaecati, perferendis dolorem cumque dignissimos autem corporis laborum repellendus? Doloribus ipsa ex natus vitae alias, cupiditate assumenda?
+                {this.state.data.description}
               </p>
             </div>
           </div>
@@ -115,10 +118,7 @@ class BusinessComponent extends Component {
           <div className="row">
             <div className="col px-5">
               <p className="text-left">
-                <span class="badge badge-pill badge-light p-2">Web development</span>
-                <span class="badge badge-pill badge-light p-2">Web design</span>
-                <span class="badge badge-pill badge-light p-2">Engineering</span>
-
+                {this.getCategories()}
               </p>
             </div>
           </div>
@@ -154,11 +154,19 @@ class BusinessComponent extends Component {
   getImages() {
     return this.state.images.map(image => {
       return (
-        <React.Fragment>
-          <div className="col-3" key={image.imageUrl}>
+        <React.Fragment key={image.imageUrl}>
+          <div className="col-3">
             <img src={image.imageUrl} alt={`image_${image.imageUrl}`} className="w-100" />
           </div>
         </React.Fragment>
+      )
+    })
+  }
+
+  getCategories() {
+    return this.state.categories.map(category => {
+      return (
+        <span key={category.name} className="badge badge-pill badge-light p-2 mx-1">{category.name}</span>
       )
     })
   }

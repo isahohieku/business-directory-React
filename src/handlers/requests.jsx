@@ -5,7 +5,8 @@ const correctCredentials = {
     password: '@Password123'
 }
 
-const baseURL = 'https://business-directory-backend.herokuapp.com/api/'
+// const baseURL = 'https://business-directory-backend.herokuapp.com/api/';
+const baseURL = 'http://localhost:4000/api/';
 
 const getRequest = (url) => axios.get(url);
 
