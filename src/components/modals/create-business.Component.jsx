@@ -1,0 +1,37 @@
+import React, { useState } from 'react';
+import { Modal } from 'react-bootstrap/';
+import '../admin-dashboard/businesses/businesses.Style.scss'
+
+export default function CreateBusinessModal() {
+    const [show, setShow] = useState(false);
+    return (
+        <React.Fragment>
+            <button className="btn add-button font-weight-light text-small text-light"
+                onClick={() => setShow(true)}><i className="fas fa-plus"></i></button>
+            <Modal
+                show={show}
+                onHide={() => setShow(false)}
+                dialogClassName="modal-90w"
+                aria-labelledby="example-custom-modal-styling-title"
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="example-custom-modal-styling-title">
+                        Custom Modal Styling
+          </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>
+                        Ipsum molestiae natus adipisci modi eligendi? Debitis amet quae unde
+                        commodi aspernatur enim, consectetur. Cumque deleniti temporibus
+                        ipsam atque a dolores quisquam quisquam adipisci possimus
+                        laboriosam. Quibusdam facilis doloribus debitis! Sit quasi quod
+                        accusamus eos quod. Ab quos consequuntur eaque quo rem! Mollitia
+                        reiciendis porro quo magni incidunt dolore amet atque facilis ipsum
+                        deleniti rem!
+          </p>
+                </Modal.Body>
+            </Modal>
+
+        </React.Fragment>
+    );
+}

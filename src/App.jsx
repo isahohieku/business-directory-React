@@ -4,7 +4,8 @@ import "./App.scss";
 import LoginPage from './components/login/page';
 import LandingPage from "./components/landing-page/landing_page";
 // import PrivateWrapper from './handlers/private-routes-wrapper';
-import Dashboard from "./components/admin-dashboard/dashboard";
+// import Dashboard from "./components/admin-dashboard/dashboard";
+import AdminLayout from './components/admin-dashboard/layout/admin-layout.Component';
 import business from "./components/business/business.Component";
 import { connect } from 'react-redux';
 import * as action from './actions';
@@ -33,7 +34,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={LandingPage} />
             <Route path="/login" component={LoginPage} />
-            <Route path="/app" component={Dashboard} />
+            <Route path="/app" component={AdminLayout} />
             <Route path="/business/:id" component={business} />
           </Switch>
         </div>
