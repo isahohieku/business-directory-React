@@ -7,3 +7,30 @@
 -moz-box-shadow: 0px 20px 44px -32px rgba(0,0,0,0.48);
 box-shadow: 0px 20px 44px -32px rgba(0,0,0,0.48);
 }
+
+
+// Modal
+.bg-primary-2 {
+    background-color: #384273 !important;
+}
+
+.image-height {
+    height: 86.5px;
+    overflow: hidden;
+}
+
+.remove_button {
+    top: -10px;
+    right: 5px;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 25px;
+}
+
+.image-holder {
+    background-position: top left;
+    background-size: cover;
+    background-color: white;
+  }

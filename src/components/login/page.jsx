@@ -79,7 +79,7 @@ class LoginPage extends Component {
                 this.setState({ loginLoading: false });
 
                 this.props.changeAuth(true);
-                this.props.history.push('/app');
+                this.props.history.push('/app/dashboard');
             });
     }
 
@@ -166,11 +166,11 @@ class LoginPage extends Component {
 const styles = {
     full_height: {
         height: '100vh',
-        backgroundColor: '#5952ff'
+        backgroundColor: '#434f80'
     },
     inner_height: {
         height: '75vh',
-        backgroundColor: '#5952ff'
+        backgroundColor: '#434f80'
     },
     center_screen: {
         top: '50%',
