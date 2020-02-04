@@ -1,11 +1,31 @@
+import dotenv from 'dotenv';
 import React, { Component } from 'react';
+import _ from 'lodash';
+import $ from 'jquery';
+import { getRequest } from '../../handlers/requests';
 import { Modal } from 'react-bootstrap/';
 import { FormControl } from '../form-controls/form-control';
 import { Button } from '../form-controls/button';
+import RenderLists from './search-result';
 import '../admin-dashboard/businesses/businesses.Style.scss';
 import AddImage from '../../img/add-img2.jpg';
+dotenv.config();
+
 
 export default class CreateBusinessModal extends Component {
+
+    widget = window.cloudinary.createUploadWidget({
+        cloudName: 'isahohieku',
+        uploadPreset: 'lmmb3jax'
+    }, (error, result) => {
+        if (!error && result && result.event === "success") {
+            const { businessImages } = this.state;
+
+            businessImages.push(result.info.secure_url);
+            this.setState({ businessImages });
+        }
+    }
+    )
 
     constructor() {
         super()
@@ -14,15 +34,24 @@ export default class CreateBusinessModal extends Component {
             business: {
                 businessName: '',
                 businessDescription: '',
-                businessKeyword: '',
                 businessEmail: '',
                 businessWebsite: '',
                 businessPhone: '',
                 businessAddress: ''
             },
-            error: {},
+            error: {
+                businessName: '',
+                businessDescription: '',
+                businessEmail: '',
+                businessWebsite: '',
+                businessPhone: '',
+                businessAddress: ''
+            },
             businessKeywords: [],
-            businessImages: []
+            businessImages: [],
+            searchResult: [],
+            searchLoading: false,
+            businessKeyword: ''
         }
 
         // Refs
@@ -30,9 +59,34 @@ export default class CreateBusinessModal extends Component {
 
         this.setShow = this.setShow.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleKeywordsChange = this.handleKeywordsChange.bind(this);
         this.openImageUpload = this.openImageUpload.bind(this);
         this.handleRemoveImage = this.handleRemoveImage.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.handleClickOutside = this.handleClickOutside.bind(this);
+
+        this.handleKeywordsChange = _.debounce((businessKeyword) => {
+            this.setState({ businessKeyword });
+            this.makeRequest()
+        }, 500);
+    }
+
+    componentDidMount() {
+        document.addEventListener('mousedown', this.handleClickOutside);
+    }
+
+    checkClosestToSearchWrapper() {
+        const wrapper = document.getElementById('search-result');
+        wrapper.closest('')
+    }
+
+    handleClickOutside(e) {
+        if (e.target.name !== 'businessKeyword' && !$(e.target).closest('#search-result').length && this.state.searchResult.length) {
+            let { searchResult } = this.state;
+            searchResult = [];
+            this.setState({ searchResult });
+        }
+        // console.log(e)
     }
 
     setShow(value) {
@@ -45,8 +99,13 @@ export default class CreateBusinessModal extends Component {
         this.setState({ business });
     }
 
+    handleKeywordsChange(e) {
+        let { businessKeyword } = this.state;
+        businessKeyword = e.target.value;
+        this.setState({ businessKeyword });
+    }
+
     handleRemoveImage(i) {
-        
         const { businessImages } = this.state;
 
         businessImages.splice(i, 1);
@@ -55,7 +114,24 @@ export default class CreateBusinessModal extends Component {
     }
 
     onSubmit() {
-        console.log(this.state.businessImages);
+        const { business, businessImages, businessKeywords } = this.state;
+        const data = { ...business, businessImages, businessKeywords };
+
+        console.log(data);
+    }
+
+    makeRequest() {
+        // const url = `https://business-directory-backend.herokuapp.com/api/businesses/search?term=${this.state.searchTerm}`;
+        const url = `http://localhost:4000/api/categories/search?term=${this.state.businessKeyword}`;
+
+        this.setState({ searchLoading: true });
+        this.setState({ searchResult: [] })
+        getRequest(url)
+            .then(res => {
+                this.setState({ searchResult: res.data.data });
+                this.setState({ searchLoading: false });
+            })
+            .catch(e => { console.log(e); this.setState({ searchLoading: false }); });
     }
 
     render() {
@@ -123,18 +199,20 @@ export default class CreateBusinessModal extends Component {
 
                             {/* Business Keyword */}
                             <div className="row mt-3">
-                                <div className="col">
+                                <div className="col position-relative">
                                     <FormControl
                                         label=""
                                         name="businessKeyword"
                                         type="text"
                                         value={businessKeyword}
-                                        onChange={this.handleChange}
+                                        onChange={e => this.handleKeywordsChange(e.target.value)}
                                         placeholder="Enter Keyword"
                                         // error={errors.businessName}
                                         required
                                         className="form-control"
                                     />
+
+                                    {this.renderLists()}
                                 </div>
                             </div>
 
@@ -262,14 +340,23 @@ export default class CreateBusinessModal extends Component {
                             {/* <img src={image} className="w-100" alt="Add Images" /> */}
                         </div>
                         <span className="position-absolute remove_button bg-dark text-light mousePointer"
-                         onClick={() => this.handleRemoveImage(i)}><i className="fas fa-times"></i></span>
+                            onClick={() => this.handleRemoveImage(i)}><i className="fas fa-times"></i></span>
                     </div>)
                 ) : ''
         );
     }
 
+    renderLists() {
+        return (
+            this.state.searchResult.length ?
+                <div className="position-absolute w-90 border bg-white border-secondary" id="search-result" style={{ zIndex: 1 }}>
+                    <RenderLists list={this.state.searchResult} loading={this.state.searchLoading} />
+                </div> : ''
+        );
+    }
+
     openImageUpload() {
-        this.uploadFile.current.click();
+        this.widget.open();
     }
 
     fileToBase64(es) {
@@ -282,7 +369,7 @@ export default class CreateBusinessModal extends Component {
                 const { businessImages } = d.state;
                 businessImages.push(myReader.result)
                 d.setState({ businessImages });
-            };
+            }
             myReader.readAsDataURL(file);
         }
     }
@@ -292,25 +379,6 @@ export default class CreateBusinessModal extends Component {
 
         // body.append('file', files);
         return;
-        // const url = `https://api.cloudinary.com/v1_1/${
-        //     this.context.cloudName
-        //     }/upload`;
-        // const title = this.titleEl.value;
-
-        // for (let file of files) {
-        //     const photoId = this.photoId++;
-        //     const fileName = file.name;
-        //     request.post(url)
-        //         .field('upload_preset', this.context.uploadPreset)
-        //         .field('file', file)
-        //         .field('multiple', true)
-        //         .field('tags', title ? `myphotoalbum,${title}` : 'myphotoalbum')
-        //         .field('context', title ? `photo=${title}` : '')
-        //         .on('progress', (progress) => this.onPhotoUploadProgress(photoId, file.name, progress))
-        //         .end((error, response) => {
-        //             this.onPhotoUploaded(photoId, fileName, response);
-        //         });
-        // }
     }
 
     onPhotoSelected(file) {

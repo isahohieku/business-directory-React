@@ -8,7 +8,13 @@ const correctCredentials = {
 // const baseURL = 'https://business-directory-backend.herokuapp.com/api/';
 const baseURL = 'http://localhost:4000/api/';
 
-const getRequest = (url) => axios.get(url);
+const config = {
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    } 
+}
+
+const getRequest = (url) => axios.get(url, config);
 
 const postRequest = (url, data) => axios.post(url, data);
 
