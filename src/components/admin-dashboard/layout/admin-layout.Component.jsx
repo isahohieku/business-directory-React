@@ -1,8 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import * as action from '../../../actions';
+
 import SideBar from './sidebar.Component';
 import Outlet from './outlet.Component';
 
-export default function Layout() {
+function Layout() {
     return (
         <React.Fragment>
             <div className="container-fluid">
@@ -24,3 +27,9 @@ export default function Layout() {
         </React.Fragment>
     )
 }
+
+function mapStateToProps(state) {
+    return { auth: state.auth }
+  }
+  
+  export default connect(mapStateToProps, action)(Layout);

@@ -9,7 +9,7 @@ export default function RenderLists(props) {
 
                     {(props.loading ? <li>Loading...</li> : '')}
                     {props.list.map(item => (
-                        <li key={item.id}>{item.name}</li>
+                        <li key={item.id} onClick={() => props.selected(item)}>{item.name}</li>
                     ))}
                 </ul>
             </div>

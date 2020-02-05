@@ -5,6 +5,7 @@ const Button = (props) => (
         type={props.type}
         className={props.className}
         onClick={props.handleClick}
+        disabled={props.loading}
     >
         {props.label} 
         {props.loading ? <i className="fas fa-spinner fa-spin ml-2"></i> : ''}

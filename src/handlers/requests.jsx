@@ -16,8 +16,10 @@ const config = {
 
 const getRequest = (url) => axios.get(url, config);
 
-const postRequest = (url, data) => axios.post(url, data);
+const postRequest = (url, data) => axios.post(url, data, config);
+
+const updateRequest = (url, data) => axios.put(url, data, config);
 
 const loginRequest = (data) => axios.post(`${baseURL}auth/login`, data);
 
-export { loginRequest, getRequest, postRequest, correctCredentials }
+export { loginRequest, getRequest, postRequest, updateRequest, correctCredentials }

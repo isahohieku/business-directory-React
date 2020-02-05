@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getRequest } from '../../handlers/requests';
+import { getRequest, updateRequest } from '../../handlers/requests';
 import './business.Style.scss';
 
 class BusinessComponent extends Component {
@@ -16,6 +16,11 @@ class BusinessComponent extends Component {
   }
 
   componentDidMount() {
+    this.getBusiness();
+    this.addView();
+  }
+
+  getBusiness() {
     const { id } = this.props.match.params;
     // const url = `https://business-directory-backend.herokuapp.com/api/businesses?id=${id}`;
     const url = `http://localhost:4000/api/businesses?id=${id}`;
@@ -30,6 +35,13 @@ class BusinessComponent extends Component {
         this.setState({ categories: res.data.data.categories });
       })
       .catch(e => console.log(e));
+  }
+
+  addView() {
+    const { id } = this.props.match.params;
+    const url = `http://localhost:4000/api/businessViews`;
+    const data = { businessId: id };
+    updateRequest(url, data).catch(e => console.log(e));
   }
 
   render() {

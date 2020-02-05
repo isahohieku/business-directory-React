@@ -1,7 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import Dashboard from '../dashboard';
 import Businesses from '../businesses/businesses';
+import Categories from '../categories/categories.Component';
 
 export default function Outlet() {
     return (
@@ -9,14 +10,11 @@ export default function Outlet() {
             <div className="container-fluid">
                 <div className="row">
                     <div className="col">
-                        <Router>
-                            <div className="">
-                                <Switch>
-                                    <Route exact path="/app/dashboard" component={Dashboard} />
-                                    <Route exact path="/app/businesses" component={Businesses} />
-                                </Switch>
-                            </div>
-                        </Router>
+                        <div className="">
+                            <Route path="/app/dashboard" component={Dashboard} />
+                            <Route path="/app/businesses" component={Businesses} />
+                            <Route path="/app/categories" component={Categories} />
+                        </div>
                     </div>
                 </div>
             </div>

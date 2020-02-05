@@ -27,7 +27,7 @@ export default function SideBar () {
                                     </Link>
                                 </li>
                                 <li className="text-left my-3">
-                                    <Link to="dashboard" className="text-light">
+                                    <Link to="/app/categories" className="text-light">
                                         <i className="fas fa-list"></i>
                                         <span className="d-inline-block ml-3">Categories</span>
                                     </Link>

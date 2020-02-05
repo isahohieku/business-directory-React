@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import React, { Component } from 'react';
 import _ from 'lodash';
 import $ from 'jquery';
-import { getRequest } from '../../handlers/requests';
+import { getRequest, postRequest } from '../../handlers/requests';
 import { Modal } from 'react-bootstrap/';
 import { FormControl } from '../form-controls/form-control';
 import { Button } from '../form-controls/button';
@@ -31,6 +31,7 @@ export default class CreateBusinessModal extends Component {
         super()
         this.state = {
             showModal: false,
+            creationLoading: false,
             business: {
                 businessName: '',
                 businessDescription: '',
@@ -39,14 +40,7 @@ export default class CreateBusinessModal extends Component {
                 businessPhone: '',
                 businessAddress: ''
             },
-            error: {
-                businessName: '',
-                businessDescription: '',
-                businessEmail: '',
-                businessWebsite: '',
-                businessPhone: '',
-                businessAddress: ''
-            },
+            errors: {},
             businessKeywords: [],
             businessImages: [],
             searchResult: [],
@@ -67,17 +61,12 @@ export default class CreateBusinessModal extends Component {
 
         this.handleKeywordsChange = _.debounce((businessKeyword) => {
             this.setState({ businessKeyword });
-            this.makeRequest()
+            this.makeSearch()
         }, 500);
     }
 
     componentDidMount() {
         document.addEventListener('mousedown', this.handleClickOutside);
-    }
-
-    checkClosestToSearchWrapper() {
-        const wrapper = document.getElementById('search-result');
-        wrapper.closest('')
     }
 
     handleClickOutside(e) {
@@ -86,7 +75,6 @@ export default class CreateBusinessModal extends Component {
             searchResult = [];
             this.setState({ searchResult });
         }
-        // console.log(e)
     }
 
     setShow(value) {
@@ -113,15 +101,65 @@ export default class CreateBusinessModal extends Component {
         this.setState({ businessImages });
     }
 
-    onSubmit() {
-        const { business, businessImages, businessKeywords } = this.state;
+    onSubmit(e) {
+        e.preventDefault();
+        let { business, businessImages, businessKeywords, errors } = this.state;
         const data = { ...business, businessImages, businessKeywords };
+
+        let err = {};
+
+        if (!data.businessName) {
+            err.businessName = 'Business name is required';
+        }
+
+        if (!data.businessDescription) {
+            err.businessDescription = 'Business description is required';
+        }
+
+        if (!data.businessEmail || !this.validateEmail(data.businessEmail)) {
+            err.businessEmail = 'Valid business email is required';
+        }
+
+        if (!data.businessWebsite || !this.validateWebsite(data.businessWebsite)) {
+            err.businessWebsite = 'Valid business website is required';
+        }
+
+        if (!data.businessPhone) {
+            err.businessPhone = 'Business Phone number is required';
+        }
+
+        if (!data.businessAddress) {
+            err.businessAddress = 'Business Address is required';
+        }
+
+        errors = err;
+
+        this.setState({ errors });
+
+        const url = 'http://localhost:4000/api/businesses';
+        this.setState({ creationLoading: true });
+        postRequest(url, data)
+            .then(res => {
+                console.log(res);
+                this.setState({ creationLoading: false });
+            })
+            .catch(e => console.log(e));
 
         console.log(data);
     }
 
-    makeRequest() {
-        // const url = `https://business-directory-backend.herokuapp.com/api/businesses/search?term=${this.state.searchTerm}`;
+    validateEmail = (email) => {
+        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+
+    validateWebsite = (website) => {
+        const re = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
+        return re.test(String(website).toLocaleLowerCase());
+    }
+
+    makeSearch() {
+        // const url = `https://business-directory-backend.herokuapp.com/api/businesses/search?term=${this.state.businessKeyword}`;
         const url = `http://localhost:4000/api/categories/search?term=${this.state.businessKeyword}`;
 
         this.setState({ searchLoading: true });
@@ -131,11 +169,10 @@ export default class CreateBusinessModal extends Component {
                 this.setState({ searchResult: res.data.data });
                 this.setState({ searchLoading: false });
             })
-            .catch(e => { console.log(e); this.setState({ searchLoading: false }); });
+            .catch(e => this.setState({ searchLoading: false }));
     }
 
     render() {
-
         const {
             business: {
                 businessName,
@@ -175,7 +212,7 @@ export default class CreateBusinessModal extends Component {
                                         value={businessName}
                                         onChange={this.handleChange}
                                         placeholder="Business name"
-                                        // error={errors.businessName}
+                                        error={errors.businessName}
                                         required
                                         className="form-control"
                                     />
@@ -185,14 +222,15 @@ export default class CreateBusinessModal extends Component {
                             {/* Business description */}
                             <div className="row mt-3">
                                 <div className="col">
+                                    {errors.businessDescription && <p className="text-danger text-right text-small mb-0">{errors.businessDescription}</p>}
                                     <textarea
                                         name="businessDescription"
                                         value={businessDescription}
                                         onChange={this.handleChange}
                                         placeholder="Business Description"
-                                        // error={errors.businessName}
-                                        required
+                                        maxLength="200"
                                         className="form-control"
+                                        style={errors.businessDescription && { border: 'solid red 1px' }}
                                     />
                                 </div>
                             </div>
@@ -207,7 +245,7 @@ export default class CreateBusinessModal extends Component {
                                         value={businessKeyword}
                                         onChange={e => this.handleKeywordsChange(e.target.value)}
                                         placeholder="Enter Keyword"
-                                        // error={errors.businessName}
+                                        // error={errors.business}
                                         required
                                         className="form-control"
                                     />
@@ -215,6 +253,9 @@ export default class CreateBusinessModal extends Component {
                                     {this.renderLists()}
                                 </div>
                             </div>
+
+                            {/* categories */}
+                            {this.renderCategories()}
 
                             {/* Business Email */}
                             <div className="row mt-3">
@@ -226,7 +267,7 @@ export default class CreateBusinessModal extends Component {
                                         value={businessEmail}
                                         onChange={this.handleChange}
                                         placeholder="Business Email"
-                                        // error={errors.businessName}
+                                        error={errors.businessEmail}
                                         required
                                         className="form-control"
                                     />
@@ -243,7 +284,7 @@ export default class CreateBusinessModal extends Component {
                                         value={businessWebsite}
                                         onChange={this.handleChange}
                                         placeholder="Business Website"
-                                        // error={errors.businessName}
+                                        error={errors.businessWebsite}
                                         required
                                         className="form-control"
                                     />
@@ -260,7 +301,7 @@ export default class CreateBusinessModal extends Component {
                                         value={businessPhone}
                                         onChange={this.handleChange}
                                         placeholder="Business Phone"
-                                        // error={errors.businessName}
+                                        error={errors.businessPhone}
                                         required
                                         className="form-control"
                                     />
@@ -270,14 +311,15 @@ export default class CreateBusinessModal extends Component {
                             {/* Business address */}
                             <div className="row mt-3">
                                 <div className="col">
+                                    {errors.businessAddress && <p className="text-danger text-right text-small mb-0">{errors.businessAddress}</p>}
                                     <textarea
                                         name="businessAddress"
                                         value={businessAddress}
                                         onChange={this.handleChange}
                                         placeholder="Business Address"
-                                        // error={errors.businessName}
-                                        required
                                         className="form-control"
+                                        maxLength="200"
+                                        style={errors.businessAddress && { border: 'solid red 1px' }}
                                     />
                                 </div>
                             </div>
@@ -306,7 +348,7 @@ export default class CreateBusinessModal extends Component {
                                         type="submit"
                                         label="Create Business"
                                         className="btn font-weight-light btn-primary mt-3 py-2 w-100 border-0"
-                                        loading={this.state.loginLoading}
+                                        loading={this.state.creationLoading}
                                         handleClick={this.onSubmit}
                                     />
                                 </div>
@@ -350,38 +392,34 @@ export default class CreateBusinessModal extends Component {
         return (
             this.state.searchResult.length ?
                 <div className="position-absolute w-90 border bg-white border-secondary" id="search-result" style={{ zIndex: 1 }}>
-                    <RenderLists list={this.state.searchResult} loading={this.state.searchLoading} />
+                    <RenderLists list={this.state.searchResult} selected={(e) => this.selectedCategory(e)} loading={this.state.searchLoading} />
                 </div> : ''
         );
     }
 
+    renderCategories() {
+        return (
+            this.state.businessKeywords.length ?
+                <div className="row mt-2">
+                    <div className="col">
+                        {this.state.businessKeywords.map(item => (<span key={item.id} className="badge badge-pill badge-light mx-2">{item.name}</span>))}
+                    </div>
+                </div> : ''
+        );
+    }
+
+    selectedCategory(e) {
+        let { businessKeywords, businessKeyword, searchResult } = this.state;
+
+        businessKeywords = businessKeywords.filter(item => item.id !== e.id);
+        businessKeywords.push(e);
+        searchResult = [];
+        businessKeyword = '';
+        this.setState({ businessKeywords, searchResult, businessKeyword });
+
+    }
+
     openImageUpload() {
         this.widget.open();
-    }
-
-    fileToBase64(es) {
-        if (es) {
-            const file = es.current.files[0];
-            const d = this;
-            const myReader = new FileReader();
-
-            myReader.onloadend = (e) => {
-                const { businessImages } = d.state;
-                businessImages.push(myReader.result)
-                d.setState({ businessImages });
-            }
-            myReader.readAsDataURL(file);
-        }
-    }
-
-    sendImage() {
-        const body = new FormData();
-
-        // body.append('file', files);
-        return;
-    }
-
-    onPhotoSelected(file) {
-        this.fileToBase64(file);
     }
 }
