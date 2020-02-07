@@ -137,11 +137,16 @@ export default class CreateBusinessModal extends Component {
 
         this.setState({ errors });
 
+        if (!Object.getOwnPropertyNames(err).length) {
+            this.setState({ submitted: true });
+        } else {
+            return;
+        }
+
         const url = 'http://localhost:4000/api/businesses';
         this.setState({ creationLoading: true });
         postRequest(url, data)
             .then(res => {
-                console.log(res);
                 this.setState({ creationLoading: false });
             })
             .catch(e => console.log(e));

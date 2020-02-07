@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 import { FormControl } from '../widgets/form-controls/form-control';
 import { Button } from '../widgets/form-controls/button';
 import { loginRequest, correctCredentials } from '../../handlers/requests';
-import { setToken, setUserData } from '../../handlers/helpers';
-
+import { setToken, setUserData, emailValidator } from '../../handlers/helpers';
 import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
@@ -44,7 +43,7 @@ class LoginPage extends Component {
 
         this.setState({ errorMessage: '' })
 
-        if (!email || !this.validateEmail(email)) {
+        if (!email || !emailValidator(email)) {
             err.email = "Enter a valid email!";
         }
 
@@ -153,11 +152,6 @@ class LoginPage extends Component {
                 </div>
             </React.Fragment>
         );
-    }
-
-    validateEmail = (email) => {
-        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(String(email).toLowerCase());
     }
 }
 

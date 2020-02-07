@@ -59,8 +59,10 @@ export default class Categories extends Component {
 
         this.setState({ error });
 
-        if (error.categoryName) {
-            return
+        if (!Object.getOwnPropertyNames(err).length) {
+            this.setState({ submitted: true });
+        } else {
+            return;
         }
 
         const data = {

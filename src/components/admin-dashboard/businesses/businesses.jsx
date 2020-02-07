@@ -24,12 +24,22 @@ class Businesses extends Component {
 
     renderAllBusinesses() {
         return (
-            this.state.businesses.map(item => {
+            this.state.businesses.map((item, i) => {
+
+                if (i < 4) {
+                    return (
+                        <div key={item.id} className="col-3">
+                            <SmallBusinessCard data={item} />
+                        </div>
+                    )
+                }
+
                 return (
-                    <div key={item.id} className="col-3">
+                    <div key={item.id} className="col-3 mt-5">
                         <SmallBusinessCard data={item} />
                     </div>
                 )
+                
             })
         );
     }
