@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import { FormControl } from '../form-controls/form-control';
-import { Button } from '../form-controls/button';
+import { FormControl } from '../widgets/form-controls/form-control';
+import { Button } from '../widgets/form-controls/button';
 import { loginRequest, correctCredentials } from '../../handlers/requests';
 import { setToken, setUserData } from '../../handlers/helpers';
 

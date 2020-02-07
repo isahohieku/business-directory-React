@@ -4,8 +4,8 @@ import _ from 'lodash';
 import $ from 'jquery';
 import { getRequest, postRequest } from '../../handlers/requests';
 import { Modal } from 'react-bootstrap/';
-import { FormControl } from '../form-controls/form-control';
-import { Button } from '../form-controls/button';
+import { FormControl } from '../widgets/form-controls/form-control';
+import { Button } from '../widgets/form-controls/button';
 import RenderLists from './search-result';
 import '../admin-dashboard/businesses/businesses.Style.scss';
 import AddImage from '../../img/add-img2.jpg';
@@ -144,8 +144,6 @@ export default class CreateBusinessModal extends Component {
                 this.setState({ creationLoading: false });
             })
             .catch(e => console.log(e));
-
-        console.log(data);
     }
 
     validateEmail = (email) => {

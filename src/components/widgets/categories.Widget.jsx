@@ -24,10 +24,4 @@ function CategoriesCard(props) {
     );
 }
 
-const styles = {
-    card_wrapper: {
- 
-    }
-}
-
 export default CategoriesCard;

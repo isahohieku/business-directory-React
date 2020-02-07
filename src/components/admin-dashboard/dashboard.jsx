@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './dashboard.Style.scss';
-import SummaryCard from './widgets/summary.Card';
-import SmallBusinessCard from './widgets/business-card-small.Component';
+import SummaryCard from '../widgets/summary.Card';
+import SmallBusinessCard from '../widgets/business-card-small.Component';
 import { getRequest } from '../../handlers/requests';
 import Typography from '@material-ui/core/Typography';
 // import Link from '@material-ui/core/Link';

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { FormControl } from '../../form-controls/form-control';
-import { Button } from '../../form-controls/button';
+import { FormControl } from '../../widgets/form-controls/form-control';
+import { Button } from '../../widgets/form-controls/button';
 import { Modal } from 'react-bootstrap';
-import CategoriesCard from '../widgets/categories.Widget';
+import CategoriesCard from '../../widgets/categories.Widget';
 import { getRequest, postRequest } from '../../../handlers/requests';
 
 export default class Categories extends Component {
