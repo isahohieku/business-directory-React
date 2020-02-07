@@ -13,10 +13,6 @@ import favicon from '../../img/lion.png';
 
 class LoginPage extends Component {
 
-    constructor(props) {
-        super(props);
-        this.handleLogin = this.handleLogin.bind(this);
-    }
     state = {
         user: {
             email: "",
@@ -28,15 +24,17 @@ class LoginPage extends Component {
         loginLoading: false
     };
 
+    componentWillMount() {
+        if (localStorage.getItem('user') !== null && localStorage.getItem('token')) {
+            this.props.history.push('/app/dashboard');
+        }
+    }
+
     handleChange = event => {
         const { user } = this.state;
         user[event.target.name] = event.target.value;
         this.setState({ user });
     };
-
-    handleLogin = () => {
-        this.props.onLoginStatusChange(true);
-    }
 
     onSubmit = () => {
         const {
@@ -176,8 +174,6 @@ const styles = {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        '-webkit-box-shadow': '0px 13px 38px -7px rgba(0,0,0,0.58)',
-        '-moz-box-shadow': '0px 13px 38px -7px rgba(0,0,0,0.58)',
         'boxShadow': '0px 13px 38px -7px rgba(0,0,0,0.58)'
     }
 }

@@ -11,6 +11,10 @@ aside {
 z-index: 1;
 }
 
+.activeLink {
+  border-left: 7px solid white;
+}
+
 .hacked-width {
   width: calc(100vw - 200px);
 }
