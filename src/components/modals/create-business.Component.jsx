@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import $ from 'jquery';
 import { getRequest, postRequest } from '../../handlers/requests';
+import { emailValidator, websiteValidator } from '../../handlers/helpers';
 import { Modal } from 'react-bootstrap/';
 import { FormControl } from '../widgets/form-controls/form-control';
 import { Button } from '../widgets/form-controls/button';
@@ -116,11 +117,11 @@ export default class CreateBusinessModal extends Component {
             err.businessDescription = 'Business description is required';
         }
 
-        if (!data.businessEmail || !this.validateEmail(data.businessEmail)) {
+        if (!data.businessEmail || !emailValidator(data.businessEmail)) {
             err.businessEmail = 'Valid business email is required';
         }
 
-        if (!data.businessWebsite || !this.validateWebsite(data.businessWebsite)) {
+        if (!data.businessWebsite || !websiteValidator(data.businessWebsite)) {
             err.businessWebsite = 'Valid business website is required';
         }
 
@@ -144,16 +145,6 @@ export default class CreateBusinessModal extends Component {
                 this.setState({ creationLoading: false });
             })
             .catch(e => console.log(e));
-    }
-
-    validateEmail = (email) => {
-        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(String(email).toLowerCase());
-    }
-
-    validateWebsite = (website) => {
-        const re = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
-        return re.test(String(website).toLocaleLowerCase());
     }
 
     makeSearch() {

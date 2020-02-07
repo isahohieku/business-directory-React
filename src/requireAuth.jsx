@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { getToken, getUserData} from './handlers/helpers';
+import * as actions from './actions';
 
 export default (ChildComponent) => {
     class ComposedComponent extends Component {
@@ -13,9 +15,17 @@ export default (ChildComponent) => {
         }
 
         navigateAway() {
-            if (!this.props.auth) {
+            if (!this.props.auth || !this.checkLocalStorage()) {
                 this.props.history.push('/login');
+                this.props.changeAuth(false);
             }
+        }
+
+        checkLocalStorage() {
+            if(getUserData() === null && !getToken()) {
+                return false;
+            }
+            return true;
         }
 
         render() {
@@ -27,5 +37,5 @@ export default (ChildComponent) => {
         return { auth: state.auth}
     }
 
-    return connect(mapStateToProps)(ComposedComponent);
+    return connect(mapStateToProps, actions)(ComposedComponent);
 } 

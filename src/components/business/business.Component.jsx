@@ -11,10 +11,6 @@ class BusinessComponent extends Component {
     categories: []
   };
 
-  constructor(props) {
-    super();
-  }
-
   componentDidMount() {
     this.getBusiness();
     this.addView();

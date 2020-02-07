@@ -2,9 +2,14 @@ import React from 'react';
 import '../dashboard.Style.scss';
 import { NavLink, useHistory } from 'react-router-dom';
 import Logout from '../../../handlers/logout';
+import Avatar from '../../../img/lion.png';
 
 export default function SideBar() {
     let history = useHistory();
+
+    const avatar = {
+        backgroundImage: `url(${Avatar})`
+    };
     return (
         <React.Fragment>
             <aside>
@@ -13,7 +18,7 @@ export default function SideBar() {
                         <div className="col pt-5 px-0">
                             <ul>
                                 <li className="text-center mb-5">
-                                    <div className="avatar d-inline-block">
+                                    <div className="avatar d-inline-block" style={avatar}>
 
                                     </div>
                                 </li>
