@@ -3,22 +3,9 @@ import './dashboard.Style.scss';
 import SummaryCard from '../widgets/summary.Card';
 import SmallBusinessCard from '../widgets/business-card-small.Component';
 import { getRequest } from '../../handlers/requests';
-import Typography from '@material-ui/core/Typography';
-// import Link from '@material-ui/core/Link';
 import { Link } from 'react-router-dom';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+
 
 export default class Dashboard extends Component {
 

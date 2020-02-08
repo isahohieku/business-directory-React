@@ -6,6 +6,7 @@ import LoginPage from './components/login/page';
 import LandingPage from "./components/landing-page/landing_page";
 import AdminLayout from './components/admin-dashboard/layout/admin-layout.Component';
 import business from "./components/business/business.Component";
+import ErrorPage from './components/error-page/ErrorPage.Component';
 import { connect } from 'react-redux';
 import * as action from './actions';
 
@@ -20,6 +21,7 @@ class App extends Component {
             <Route path="/login" component={LoginPage} />
             <Route path="/app" component={requiresAuth(AdminLayout)} />
             <Route path="/business/:id" component={business} />
+            <Route path="*" component={ErrorPage} />
           </Switch>
         </div>
       </Router>

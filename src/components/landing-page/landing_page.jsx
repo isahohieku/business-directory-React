@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import favicon from '../../img/lion.png';
 import { getRequest } from '../../handlers/requests';
 import _ from 'lodash';
 import './styles.scss';
 import RenderLists from './search-result';
+import Header from '../layout/header.component';
+import Footer from '../layout/footer.component';
 
 class LandingPage extends Component {
 
@@ -48,17 +49,8 @@ class LandingPage extends Component {
             <div className="container-fluid">
                 <div className="row">
                     <div className="col px-0">
-                        <nav className="bg-primary2 py-4">
-                            <div className="container-fluid">
-                                <div className="row">
-                                    <div className="col d-flex justify-content-between">
-                                        <h5>Business Directory</h5>
-
-                                        <Link to="/login" className="text-light">Admin</Link>
-                                    </div>
-                                </div>
-                            </div>
-                        </nav>
+                        {/* Header */}
+                        <Header />
 
                         {/* main */}
                         <header>
@@ -121,6 +113,9 @@ class LandingPage extends Component {
                         <section>
                             
                         </section>
+
+                        {/* Footer */}
+                        <Footer />
                     </div>
                 </div>
             </div>
