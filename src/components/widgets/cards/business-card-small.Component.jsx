@@ -1,5 +1,5 @@
 import React from 'react';
-import '../admin-dashboard/dashboard.style.scss';
+import '../../admin-dashboard/dashboard.style.scss';
 
 export default function SmallBusinessCard(props) {
     const { data } = props;

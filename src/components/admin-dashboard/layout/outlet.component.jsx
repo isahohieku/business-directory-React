@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import Dashboard from '../dashboard.component';
-import Businesses from '../businesses/businesses';
+import Businesses from '../businesses/businesses.component';
 import Categories from '../categories/categories.component';
 
 export default function Outlet() {
