@@ -27,6 +27,8 @@ const postRequest = (url, data) => axios.post(url, data, setHeader());
 
 const updateRequest = (url, data) => axios.put(url, data, setHeader());
 
+const deleteRequest = (url) => axios.delete(url, setHeader());
+
 const loginRequest = (data) => axios.post(`${baseURL}auth/login`, data);
 
-export { loginRequest, getRequest, postRequest, updateRequest, correctCredentials }
+export { loginRequest, getRequest, postRequest, updateRequest, deleteRequest, correctCredentials }

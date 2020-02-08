@@ -22,6 +22,15 @@ class Businesses extends Component {
             .catch(e => console.log(e));
     }
 
+    handleDeleteBusiness(id) {
+        const { businesses } = this.state;
+
+        const indexOfBusiness = businesses.findIndex(item => item.id === id);
+
+        businesses.splice(indexOfBusiness, 1);
+        this.setState({ businesses });
+    }
+
     renderAllBusinesses() {
         return (
             this.state.businesses.map((item, i) => {
@@ -29,14 +38,14 @@ class Businesses extends Component {
                 if (i < 4) {
                     return (
                         <div key={item.id} className="col-3">
-                            <SmallBusinessCard data={item} />
+                            <SmallBusinessCard data={item} handleDeleteBusiness={(id) => this.handleDeleteBusiness(id)} />
                         </div>
                     )
                 }
 
                 return (
                     <div key={item.id} className="col-3 mt-5">
-                        <SmallBusinessCard data={item} />
+                        <SmallBusinessCard data={item} handleDeleteBusiness={(id) => this.handleDeleteBusiness(id)} />
                     </div>
                 )
                 

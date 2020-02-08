@@ -1,5 +1,6 @@
 import React from 'react';
 import '../../admin-dashboard/dashboard.style.scss';
+import DeleteModal from '../../modals/delete-business.component';
 
 export default function SmallBusinessCard(props) {
     const { data } = props;
@@ -31,7 +32,11 @@ export default function SmallBusinessCard(props) {
             <div className="container small-card-wrapper pb-3">
                 <div className="row">
                     <div className="col px-0">
-                        <p className="text-left text-light mt-2 pl-3">{getName()}</p>
+                        <div className="d-flex justify-content-between">
+                            <p className="text-left text-light my-2 pl-3">{getName()}</p>
+                            {/* delete modal */}
+                            <DeleteModal id={data.id} name={data.name} deleted={(id) => props.handleDeleteBusiness(id)} />
+                        </div>
                         <div className="image-holder" style={getImage()}></div>
                     </div>
                 </div>

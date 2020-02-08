@@ -12,7 +12,7 @@ export default function Footer() {
                                     className="text-primary2" target="_blank" rel="noreferrer noopener"><i className="fab fa-linkedin-in fa-3x"></i></a></li>
                                 <li className="d-inline-block px-2"><a href="https://www.github.com/isahohieku" className="text-primary2"
                                     target="_blank" rel="noreferrer noopener"><i className="fab fa-github fa-3x"></i></a></li>
-                                <li className="d-inline-block px-2"><a href="https://www.dribble.com/isahohieku" className="text-primary2"
+                                <li className="d-inline-block px-2"><a href="https://www.dribbble.com/isahohieku" className="text-primary2"
                                     target="_blank" rel="noreferrer noopener"><i className="fab fa-dribbble fa-3x"></i></a></li>
                                 <li className="d-inline-block px-2"><a href="https://www.behance.net/isahohiekufa98" className="text-primary2"
                                     target="_blank" rel="noreferrer noopener"><i className="fab fa-behance fa-3x"></i></a></li>
