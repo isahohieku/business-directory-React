@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { getRequest, updateRequest } from '../../handlers/requests';
-import './business.Style.scss';
+import './business.style.scss';
 import Header from '../layout/header.component';
 import Footer from "../layout/footer.component";
 

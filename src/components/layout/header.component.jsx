@@ -7,7 +7,7 @@ export default function Header() {
             <div className="container-fluid">
                 <div className="row">
                     <div className="col d-flex justify-content-between">
-                        <h5>Business Directory</h5>
+                        <Link to="/"><h5 className="text-light">Business Directory</h5></Link>
 
                         <Link to="/login" className="text-light">Admin</Link>
                     </div>

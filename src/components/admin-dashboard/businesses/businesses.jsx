@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { getRequest } from '../../../handlers/requests';
-import './businesses.Style.scss';
-import CreateBusinessModal from "../../modals/create-business.Component";
+import './businesses.style.scss';
+import CreateBusinessModal from "../../modals/create-business.component";
 import SmallBusinessCard from '../../widgets/business-card-small.Component';
 
 class Businesses extends Component {

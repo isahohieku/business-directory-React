@@ -23,7 +23,7 @@ class LoginPage extends Component {
         loginLoading: false
     };
 
-    componentWillMount() {
+    componentDidMount() {
         if (localStorage.getItem('user') !== null && localStorage.getItem('token')) {
             this.props.history.push('/app/dashboard');
         }

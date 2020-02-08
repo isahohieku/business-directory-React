@@ -1,13 +1,8 @@
 import React from 'react';
-import '../admin-dashboard/dashboard.Style.scss';
+import '../admin-dashboard/dashboard.style.scss';
 
 export default function SmallBusinessCard(props) {
     const { data } = props;
-
-    // if (data && data.images && data.images[0] ) {
-    //     setData(data);
-    //     console.log(props);
-    // }
 
     const getImage = () => {
         if (data && data.images && data.images[0]) {
@@ -30,8 +25,6 @@ export default function SmallBusinessCard(props) {
             )
         }
     }
-
-    // console.log(props.data);
 
     return (
         <React.Fragment>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './dashboard.Style.scss';
+import './dashboard.style.scss';
 import SummaryCard from '../widgets/summary.Card';
 import SmallBusinessCard from '../widgets/business-card-small.Component';
 import { getRequest } from '../../handlers/requests';

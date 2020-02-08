@@ -8,7 +8,7 @@ import { Modal } from 'react-bootstrap/';
 import { FormControl } from '../widgets/form-controls/form-control';
 import { Button } from '../widgets/form-controls/button';
 import RenderLists from './search-result';
-import '../admin-dashboard/businesses/businesses.Style.scss';
+import '../admin-dashboard/businesses/businesses.style.scss';
 import AddImage from '../../img/add-img2.jpg';
 dotenv.config();
 

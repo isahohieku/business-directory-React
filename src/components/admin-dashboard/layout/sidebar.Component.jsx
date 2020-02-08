@@ -1,5 +1,5 @@
 import React from 'react';
-import '../dashboard.Style.scss';
+import '../dashboard.style.scss';
 import { NavLink, useHistory } from 'react-router-dom';
 import Logout from '../../../handlers/logout';
 import Avatar from '../../../img/lion.png';

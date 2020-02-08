@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as action from '../../../actions';
 
-import SideBar from './sidebar.Component';
-import Outlet from './outlet.Component';
+import SideBar from './sidebar.component';
+import Outlet from './outlet.component';
 
 function Layout() {
     return (

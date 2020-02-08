@@ -2,7 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import Dashboard from '../dashboard';
 import Businesses from '../businesses/businesses';
-import Categories from '../categories/categories.Component';
+import Categories from '../categories/categories.component';
 
 export default function Outlet() {
     return (
