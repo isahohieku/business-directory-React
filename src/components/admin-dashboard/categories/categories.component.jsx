@@ -150,13 +150,24 @@ export default class Categories extends Component {
         );
     }
 
+    handleDeleted(id) {
+
+        const { categories } = this.state;
+        const categoryIndex = categories.findIndex(item => item.id === id);
+
+        categories.splice(categoryIndex, 1);
+
+        this.setState({ categories });
+
+    }
+
     renderAllCategories() {
         return (
             this.state.categories.length ?
                 (
                     this.state.categories.map(item => (
                         <div className="col-4" key={item.id}>
-                            <CategoriesCard data={item} />
+                            <CategoriesCard data={item} handleDelete={(id) => this.handleDeleted(id)} />
                         </div>
                     ))
                 ) : ''

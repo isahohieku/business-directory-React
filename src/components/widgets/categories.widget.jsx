@@ -1,8 +1,9 @@
 import React from 'react';
+import DeleteCategoryModal from '../modals/delete-category.component';
 import './widget.styles.scss';
 
 function CategoriesCard(props) {
-    const { name } = props.data;
+    const { name, id } = props.data;
     return (
         <React.Fragment>
             <div className="card-wrapper-2">
@@ -10,9 +11,7 @@ function CategoriesCard(props) {
                     <button className="btn text-light">
                         <i className="fas fa-pen"></i>
                     </button>
-                    <button className="btn text-light">
-                        <i className="fas fa-times"></i>
-                    </button>
+                    {<DeleteCategoryModal id={id} name={name} deleted={(id) => props.handleDelete(id)} />}
                 </div>
                 <hr/>
                 <div className="text-light px-4">
