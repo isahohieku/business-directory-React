@@ -9,6 +9,7 @@ import business from "./components/business/business.Component";
 import ErrorPage from './components/error-page/ErrorPage.Component';
 import { connect } from 'react-redux';
 import * as action from './actions';
+import ScrollToTop from './handlers/scroll.to.top';
 
 class App extends Component {
 
@@ -16,13 +17,14 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <Switch>
-            <Route exact path="/" component={LandingPage} />
-            <Route path="/login" component={LoginPage} />
-            <Route path="/app" component={requiresAuth(AdminLayout)} />
-            <Route path="/business/:id" component={business} />
-            <Route path="*" component={ErrorPage} />
-          </Switch>
+          <ScrollToTop />
+            <Switch>
+              <Route exact path="/" component={LandingPage} />
+              <Route path="/login" component={LoginPage} />
+              <Route path="/app" component={requiresAuth(AdminLayout)} />
+              <Route path="/business/:id" component={business} />
+              <Route path="*" component={ErrorPage} />
+            </Switch>
         </div>
       </Router>
     );
