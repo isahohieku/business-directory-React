@@ -3,6 +3,7 @@ import { FormControl } from '../../widgets/form-controls/form-control';
 import { Button } from '../../widgets/form-controls/button';
 import { Modal } from 'react-bootstrap';
 import CategoriesCard from '../../widgets/categories.widget';
+import Loader from '../../widgets/loader.widget';
 import { getRequest, postRequest } from '../../../handlers/requests';
 
 export default class Categories extends Component {
@@ -13,6 +14,7 @@ export default class Categories extends Component {
         this.state = {
             showModal: false,
             creationLoading: false,
+            loading: false,
             categories: [],
             categoryName: '',
             error: ''
@@ -24,11 +26,13 @@ export default class Categories extends Component {
 
     componentDidMount() {
         const url = 'categories';
+        this.setState({ loading: true });
 
         getRequest(url)
             .then(res => {
                 let { categories } = this.state;
                 categories = res.data.data
+                this.setState({ loading: false });
                 this.setState({ categories });
             })
             .catch(e => console.log(e));
@@ -80,6 +84,12 @@ export default class Categories extends Component {
                 this.setState({ creationLoading: false });
             })
             .catch(e => console.log(e));
+    }
+
+    renderLoader() {
+        return (
+            this.state.loading ? <Loader /> : ''
+        );
     }
 
     render() {
@@ -144,6 +154,7 @@ export default class Categories extends Component {
                     </div>
                     <div className="row mt-5">
                         {this.renderAllCategories()}
+                        {this.renderLoader()}
                     </div>
                 </div>
             </React.Fragment>

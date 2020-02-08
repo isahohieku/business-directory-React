@@ -3,21 +3,25 @@ import { getRequest } from '../../../handlers/requests';
 import './businesses.style.scss';
 import CreateBusinessModal from "../../modals/create-business.component";
 import SmallBusinessCard from '../../widgets/cards/business-card-small.Component';
+import Loader from '../../widgets/loader.widget';
 
 class Businesses extends Component {
     constructor() {
         super();
         this.state = {
-            businesses: []
+            businesses: [],
+            loading: false
         }
     }
 
     componentDidMount() {
         const url = 'businesses';
 
+        this.setState({ loading: true });
         getRequest(url)
             .then(res => {
-                this.setState({ businesses: res.data.data })
+                this.setState({ loading: false });
+                this.setState({ businesses: res.data.data });
             })
             .catch(e => console.log(e));
     }
@@ -48,7 +52,7 @@ class Businesses extends Component {
                         <SmallBusinessCard data={item} handleDeleteBusiness={(id) => this.handleDeleteBusiness(id)} />
                     </div>
                 )
-                
+
             })
         );
     }
@@ -60,10 +64,16 @@ class Businesses extends Component {
         this.setState({ businesses });
     }
 
+    renderLoader() {
+        return (
+            this.state.loading ? <Loader /> : ''
+        );
+    }
+
     render() {
         return (
             <React.Fragment>
-                <div className="container"  style={{ minHeight: '100vh' }}>
+                <div className="container" style={{ minHeight: '100vh' }}>
                     <div className="row">
                         <div className="col pt-5 d-flex justify-content-between main-header">
                             <h4 className="text-light">All Businesses</h4>
@@ -74,6 +84,7 @@ class Businesses extends Component {
                     </div>
                     <div className="row mt-5">
                         {this.renderAllBusinesses()}
+                        {this.renderLoader()}
                     </div>
                 </div>
             </React.Fragment>

@@ -3,6 +3,7 @@ import './dashboard.style.scss';
 import SummaryCard from '../widgets/cards/summary.card';
 import SmallBusinessCard from '../widgets/cards/business-card-small.Component';
 import MostViewedCard from '../widgets/cards/most-viewed.card';
+import Loader from '../widgets/loader.widget';
 import { getRequest } from '../../handlers/requests';
 import { Link } from 'react-router-dom';
 
@@ -12,11 +13,25 @@ export default class Dashboard extends Component {
 
   state = {
     mostRecent: [],
-    mostViewed: []
+    mostViewed: [],
+    recentLoading: false,
+    viewsLoading: false
   }
   componentDidMount() {
     this.getRecentBusiness();
     this.getMostBusinessViews();
+  }
+
+  renderRecentLoader() {
+    return (
+      this.state.recentLoading ? <Loader /> : ''
+    );
+  }
+
+  renderViewsLoader() {
+    return (
+      this.state.viewsLoading ? <Loader /> : ''
+    );
   }
 
   render() {
@@ -42,6 +57,7 @@ export default class Dashboard extends Component {
               </div>
               <div className="row mt-3 d-flex">
                 {this.renderMostRecent()}
+                {this.renderRecentLoader()}
               </div>
               <div className="row mt-3">
                 <div className="col d-flex justify-content-end">
@@ -52,7 +68,7 @@ export default class Dashboard extends Component {
               </div>
             </div>
 
-            <hr/>
+            <hr />
           </div>
 
           {/* Most Viewed */}
@@ -65,6 +81,7 @@ export default class Dashboard extends Component {
               </div>
               <div className="row mt-3 d-flex">
                 {this.renderMostViews()}
+                {this.renderViewsLoader()}
               </div>
 
               <div className="row mt-3">
@@ -108,9 +125,11 @@ export default class Dashboard extends Component {
   getRecentBusiness() {
     const url = `businesses?sort=recent`;
 
+    this.setState({ recentLoading: true });
     getRequest(url)
       .then(res => {
         const { data } = res.data;
+        this.setState({ recentLoading: false });
         this.setState({ mostRecent: data });
       })
       .catch(e => console.log(e));
@@ -119,9 +138,11 @@ export default class Dashboard extends Component {
   getMostBusinessViews() {
     const url = `businesses?sort=views`;
 
+    this.setState({ viewsLoading: true });
     getRequest(url)
       .then(res => {
         const { data } = res.data;
+        this.setState({ viewsLoading: false });
         this.setState({ mostViewed: data });
       })
       .catch(e => console.log(e));
