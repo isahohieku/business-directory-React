@@ -23,7 +23,7 @@ export default class Categories extends Component {
     }
 
     componentDidMount() {
-        const url = 'http://localhost:4000/api/categories';
+        const url = 'categories';
 
         getRequest(url)
             .then(res => {
@@ -69,7 +69,7 @@ export default class Categories extends Component {
             name: categoryName
         }
 
-        const url = 'http://localhost:4000/api/categories';
+        const url = 'categories';
         this.setState({ creationLoading: true });
         postRequest(url, data)
             .then(res => {

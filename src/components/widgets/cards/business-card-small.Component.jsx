@@ -1,9 +1,13 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import '../../admin-dashboard/dashboard.style.scss';
 import DeleteModal from '../../modals/delete-business.component';
 
 export default function SmallBusinessCard(props) {
     const { data } = props;
+    const history = useHistory();
+
+
 
     const getImage = () => {
         if (data && data.images && data.images[0]) {
@@ -27,6 +31,13 @@ export default function SmallBusinessCard(props) {
         }
     }
 
+    const addDeleteButton = () => {
+        if (history.location.pathname === '/app/businesses') {
+            return (<DeleteModal id={data.id} name={data.name} deleted={(id) => props.handleDeleteBusiness(id)} />)
+        }
+        return '';
+    }
+
     return (
         <React.Fragment>
             <div className="container small-card-wrapper pb-3">
@@ -35,7 +46,7 @@ export default function SmallBusinessCard(props) {
                         <div className="d-flex justify-content-between">
                             <p className="text-left text-light my-2 pl-3">{getName()}</p>
                             {/* delete modal */}
-                            <DeleteModal id={data.id} name={data.name} deleted={(id) => props.handleDeleteBusiness(id)} />
+                            {addDeleteButton()}
                         </div>
                         <div className="image-holder" style={getImage()}></div>
                     </div>

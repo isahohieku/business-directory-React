@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './dashboard.style.scss';
 import SummaryCard from '../widgets/cards/summary.card';
 import SmallBusinessCard from '../widgets/cards/business-card-small.Component';
+import MostViewedCard from '../widgets/cards/most-viewed.card';
 import { getRequest } from '../../handlers/requests';
 import { Link } from 'react-router-dom';
 
@@ -97,7 +98,7 @@ export default class Dashboard extends Component {
       this.state.mostViewed.map(item => {
         return (
           <div key={item.id} className="col-3">
-            <SmallBusinessCard data={item} />
+            <MostViewedCard data={item} />
           </div>
         )
       })
@@ -105,7 +106,7 @@ export default class Dashboard extends Component {
   }
 
   getRecentBusiness() {
-    const url = `http://localhost:4000/api/businesses?sort=recent`;
+    const url = `businesses?sort=recent`;
 
     getRequest(url)
       .then(res => {
@@ -116,7 +117,7 @@ export default class Dashboard extends Component {
   }
 
   getMostBusinessViews() {
-    const url = `http://localhost:4000/api/businesses?sort=views`;
+    const url = `businesses?sort=views`;
 
     getRequest(url)
       .then(res => {

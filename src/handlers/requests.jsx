@@ -21,13 +21,13 @@ const setHeader = () => {
     return config;
 }
 
-const getRequest = (url) => axios.get(url, setHeader());
+const getRequest = (url) => axios.get(`${baseURL}${url}`, setHeader());
 
-const postRequest = (url, data) => axios.post(url, data, setHeader());
+const postRequest = (url, data) => axios.post(`${baseURL}${url}`, data, setHeader());
 
-const updateRequest = (url, data) => axios.put(url, data, setHeader());
+const updateRequest = (url, data) => axios.put(`${baseURL}${url}`, data, setHeader());
 
-const deleteRequest = (url) => axios.delete(url, setHeader());
+const deleteRequest = (url) => axios.delete(`${baseURL}${url}`, setHeader());
 
 const loginRequest = (data) => axios.post(`${baseURL}auth/login`, data);
 

@@ -21,7 +21,7 @@ class BusinessComponent extends Component {
   getBusiness() {
     const { id } = this.props.match.params;
     // const url = `https://business-directory-backend.herokuapp.com/api/businesses?id=${id}`;
-    const url = `http://localhost:4000/api/businesses?id=${id}`;
+    const url = `businesses?id=${id}`;
 
     getRequest(url)
       .then(res => {
@@ -37,7 +37,7 @@ class BusinessComponent extends Component {
 
   addView() {
     const { id } = this.props.match.params;
-    const url = `http://localhost:4000/api/businessViews`;
+    const url = `businessViews`;
     const data = { businessId: id };
     updateRequest(url, data).catch(e => console.log(e));
   }

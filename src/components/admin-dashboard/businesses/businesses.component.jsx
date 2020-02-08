@@ -13,7 +13,7 @@ class Businesses extends Component {
     }
 
     componentDidMount() {
-        const url = 'http://localhost:4000/api/businesses';
+        const url = 'businesses';
 
         getRequest(url)
             .then(res => {
@@ -65,7 +65,7 @@ class Businesses extends Component {
             <React.Fragment>
                 <div className="container"  style={{ minHeight: '100vh' }}>
                     <div className="row">
-                        <div className="col pt-5 d-flex justify-content-between">
+                        <div className="col pt-5 d-flex justify-content-between main-header">
                             <h4 className="text-light">All Businesses</h4>
                             <div>
                                 <CreateBusinessModal created={(res) => this.updateBusinesses(res)} />

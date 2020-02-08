@@ -34,7 +34,7 @@ class LandingPage extends Component {
     }
 
     getRecentBusiness() {
-        const url = `http://localhost:4000/api/businesses?sort=recent`;
+        const url = `businesses?sort=recent`;
 
         getRequest(url)
             .then(res => {
@@ -46,7 +46,7 @@ class LandingPage extends Component {
 
     makeRequest() {
         // const url = `https://business-directory-backend.herokuapp.com/api/businesses/search?term=${this.state.searchTerm}`;
-        const url = `http://localhost:4000/api/businesses/search?term=${this.state.searchTerm}`;
+        const url = `businesses/search?term=${this.state.searchTerm}`;
 
         this.setState({ searchLoading: true });
         this.setState({ searchResult: [] })

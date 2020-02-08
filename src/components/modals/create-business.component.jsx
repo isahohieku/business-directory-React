@@ -143,7 +143,7 @@ export default class CreateBusinessModal extends Component {
             return;
         }
 
-        const url = 'http://localhost:4000/api/businesses';
+        const url = 'businesses';
         this.setState({ creationLoading: true });
         postRequest(url, data)
             .then(res => {
@@ -166,7 +166,7 @@ export default class CreateBusinessModal extends Component {
 
     makeSearch() {
         // const url = `https://business-directory-backend.herokuapp.com/api/businesses/search?term=${this.state.businessKeyword}`;
-        const url = `http://localhost:4000/api/categories/search?term=${this.state.businessKeyword}`;
+        const url = `categories/search?term=${this.state.businessKeyword}`;
 
         this.setState({ searchLoading: true });
         this.setState({ searchResult: [] })

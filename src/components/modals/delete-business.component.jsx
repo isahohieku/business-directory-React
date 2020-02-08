@@ -32,7 +32,7 @@ export default class DeleteBusinessModal extends Component {
     handleDeleteBusiness() {
         const id = this.props.id
 
-        const url = `http://localhost:4000/api/businesses?id=${id}`;
+        const url = `businesses?id=${id}`;
 
         let { deletionLoading } = this.state;
 
