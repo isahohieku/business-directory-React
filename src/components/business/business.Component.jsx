@@ -137,7 +137,7 @@ class BusinessComponent extends Component {
           </div>
 
           {/* All Images Section */}
-          <div className="container box-shadow-2 py-3 mt-3 bg-lights">
+          <div className="container box-shadow-2 py-3 mt-3 bg-lights mb-5">
             <div className="row">
               <div className="col">
                 <p className="font-weight-bold text-left">All photos</p>
