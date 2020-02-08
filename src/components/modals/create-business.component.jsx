@@ -148,6 +148,18 @@ export default class CreateBusinessModal extends Component {
         postRequest(url, data)
             .then(res => {
                 this.setState({ creationLoading: false });
+                this.setShow(false);
+                this.props.created(res.data.data);
+                this.setState({ businessKeywords: [] });
+                this.setState({ businessImages: [] });
+                this.setState({ searchResult: [] });
+
+                const { business } = this.state;
+
+                Object.keys(business).forEach(function(key){ business[key] = '' });
+
+                this.setState(business);
+
             })
             .catch(e => console.log(e));
     }

@@ -53,6 +53,13 @@ class Businesses extends Component {
         );
     }
 
+    updateBusinesses(res) {
+        const { businesses } = this.state;
+
+        businesses.push(res);
+        this.setState({ businesses });
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -61,7 +68,7 @@ class Businesses extends Component {
                         <div className="col pt-5 d-flex justify-content-between">
                             <h4 className="text-light">All Businesses</h4>
                             <div>
-                                <CreateBusinessModal />
+                                <CreateBusinessModal created={(res) => this.updateBusinesses(res)} />
                             </div>
                         </div>
                     </div>
