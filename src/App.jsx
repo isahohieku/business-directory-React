@@ -5,7 +5,7 @@ import "./App.scss";
 import LoginPage from './components/login/login.component';
 import LandingPage from "./components/landing-page/landing-page.component";
 import AdminLayout from './components/admin-dashboard/layout/admin-layout.component';
-import Business from "./components/business/business.component";
+// import Business from "./components/business/business.component";
 import ErrorPage from './components/error-page/error-page.component';
 import { connect } from 'react-redux';
 import * as action from './actions';
@@ -22,7 +22,7 @@ class App extends Component {
               <Route exact path="/" component={LandingPage} />
               <Route path="/login" component={LoginPage} />
               <Route path="/app" component={requiresAuth(AdminLayout)} />
-              <Route path="/business/:id" component={Business} />
+              {/* <Route path="/business/:id" component={Business} /> */}
               <Route path="*" component={ErrorPage} />
             </Switch>
         </div>
