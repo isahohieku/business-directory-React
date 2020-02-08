@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
+import { Link } from 'react-router-dom';
 import favicon from '../../img/lion.png';
 import { getRequest } from '../../handlers/requests';
-import _ from 'lodash';
 import './styles.scss';
 import RenderLists from './search-result';
 import Header from '../layout/header.component';
 import Footer from '../layout/footer.component';
+import MostRecentCard from '../widgets/cards/most-recent.card';
 
 class LandingPage extends Component {
 
@@ -22,8 +24,24 @@ class LandingPage extends Component {
         this.state = {
             searchTerm: '',
             searchLoading: false,
-            searchResult: []
+            searchResult: [],
+            mostRecent: []
         }
+    }
+
+    componentDidMount() {
+        this.getRecentBusiness();
+    }
+
+    getRecentBusiness() {
+        const url = `http://localhost:4000/api/businesses?sort=recent`;
+
+        getRequest(url)
+            .then(res => {
+                const { data } = res.data;
+                this.setState({ mostRecent: data });
+            })
+            .catch(e => console.log(e));
     }
 
     makeRequest() {
@@ -86,6 +104,20 @@ class LandingPage extends Component {
 
                         {/* First Section */}
                         <main>
+                            <div className="container mb-5">
+                                <div className="row">
+                                    <div className="col">
+                                        <h4 className="mt-5 mb-3 text-left text-primary2">Recently added businesses</h4>
+                                    </div>
+                                </div>
+                                <div className="row py-4">
+                                    {this.renderMostRecent()}
+                                </div>
+                            </div>
+                        </main>
+
+                        {/* Second section */}
+                        <section>
                             <div className="container-fluid bg-primary2">
                                 <div className="row">
                                     <div className="col py-5">
@@ -107,11 +139,7 @@ class LandingPage extends Component {
                                     </div>
                                 </div>
                             </div>
-                        </main>
 
-                        {/* Second section */}
-                        <section>
-                            
                         </section>
 
                         {/* Footer */}
@@ -119,6 +147,18 @@ class LandingPage extends Component {
                     </div>
                 </div>
             </div>
+        );
+    }
+
+    renderMostRecent() {
+        return (
+            this.state.mostRecent.map(item => {
+                return (
+                    <div key={item.id} className="col-3">
+                        <Link to={`/business/${item.id}`}><MostRecentCard data={item} /></Link>
+                    </div>
+                )
+            })
         );
     }
 
