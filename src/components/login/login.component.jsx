@@ -51,11 +51,13 @@ class LoginPage extends Component {
             err.password = "Password must be at least 6 characters!";
         }
 
-        this.setState({ errors: err }, () => {
-            if (Object.getOwnPropertyNames(this.state.errors).length === 0) {
-                this.setState({ submitted: true });
-            }
-        });
+        this.setState({ errors: err });
+        this.setState({ submitted: true });
+
+
+        if (Object.getOwnPropertyNames(this.state.errors).length) {
+            return;
+        }
 
         if (email !== correctCredentials.email || password !== correctCredentials.password) {
             this.setState({ errorMessage: 'Wrong username or Password' })
@@ -77,7 +79,8 @@ class LoginPage extends Component {
 
                 this.props.changeAuth(true);
                 this.props.history.push('/app/dashboard');
-            });
+            })
+            .catch(e => { console.log(e); this.setState({ loginLoading: false }); });
     }
 
     render() {

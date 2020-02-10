@@ -8,6 +8,7 @@ import RenderLists from './search-result';
 import Header from '../layout/header.component';
 import Footer from '../layout/footer.component';
 import MostRecentCard from '../widgets/cards/most-recent.card';
+import Loader from '../widgets/loader.widget';
 
 class LandingPage extends Component {
 
@@ -19,11 +20,10 @@ class LandingPage extends Component {
             this.makeRequest()
         }, 500);
 
-        this.handleFormSubmission = this.handleFormSubmission.bind(this);
-
         this.state = {
             searchTerm: '',
             searchLoading: false,
+            mostRecentLoading: false,
             searchResult: [],
             mostRecent: []
         }
@@ -36,12 +36,14 @@ class LandingPage extends Component {
     getRecentBusiness() {
         const url = `businesses?sort=recent`;
 
+        this.setState({ mostRecentLoading: true });
         getRequest(url)
             .then(res => {
+                this.setState({ mostRecentLoading: false });
                 const { data } = res.data;
                 this.setState({ mostRecent: data });
             })
-            .catch(e => console.log(e));
+            .catch(e => { console.log(e); this.setState({ mostRecentLoading: false }); });
     }
 
     makeRequest() {
@@ -58,10 +60,15 @@ class LandingPage extends Component {
             .catch(e => { console.log(e); this.setState({ searchLoading: false }); });
     }
 
-    handleFormSubmission(event) {
-        event.preventDefault();
-        alert('yes');
+    renderLoader() {
+        const background_color = {
+            backgroundColor: '#434f80'
+        }
+        return (
+            this.state.mostRecentLoading ? <Loader customStyle={background_color} /> : ''
+        );
     }
+
     render() {
         return (
             <div className="container-fluid">
@@ -86,13 +93,12 @@ class LandingPage extends Component {
                                             <div className="col">
                                                 <form className="w-100 d-flex justify-content-between" autoComplete="off" onSubmit={this.handleFormSubmission}>
                                                     <input type="search" name="searchTerm" placeholder="Search a business" className="search px-3" onChange={e => this.handleSearchChange(e.target.value)} />
-                                                    <button className="btn bg-primary2 text-white w-20 search-button">Search</button>
                                                 </form>
                                             </div>
                                         </div>
                                         <div className="row position-absolute w-100">
                                             <div className="col">
-                                                <div className=" w-80">
+                                                <div className=" w-100">
                                                     <RenderLists list={this.state.searchResult} loading={this.state.searchLoading} />
                                                 </div>
                                             </div>
@@ -112,6 +118,7 @@ class LandingPage extends Component {
                                 </div>
                                 <div className="row py-4">
                                     {this.renderMostRecent()}
+                                    {this.renderLoader()}
                                 </div>
                             </div>
                         </main>
