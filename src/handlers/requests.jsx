@@ -6,8 +6,8 @@ const correctCredentials = {
     password: '@Password123'
 }
 
-// const baseURL = 'https://business-directory-backend.herokuapp.com/api/';
-const baseURL = 'http://localhost:4000/api/';
+const baseURL = 'https://business-directory-backend.herokuapp.com/api/';
+// const baseURL = 'http://localhost:4000/api/';
 
 
 
