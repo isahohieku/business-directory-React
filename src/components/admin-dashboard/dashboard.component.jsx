@@ -15,10 +15,18 @@ export default class Dashboard extends Component {
     mostRecent: [],
     mostViewed: [],
     meta: {
-      images: 0,
-      views: 0,
-      categories: 0,
-      businesses: 0
+      images: {
+        count: 0
+      },
+      views: {
+        sum: 0
+      },
+      categories: {
+        count: 0
+      },
+      businesses: {
+        count: 0
+      }
     },
     recentLoading: false,
     viewsLoading: false
@@ -47,10 +55,10 @@ export default class Dashboard extends Component {
         <div className="container">
           <div className="row">
             <div className="col d-flex justify-content-between">
-              <SummaryCard title="Businesses" numbers={this.state.meta.businesses} />
-              <SummaryCard title="Categories" numbers={this.state.meta.categories} />
-              <SummaryCard title="Views" numbers={this.state.meta.views} />
-              <SummaryCard title="Images" numbers={this.state.meta.images} />
+              <SummaryCard title="Businesses" numbers={this.state.meta.businesses.count} />
+              <SummaryCard title="Categories" numbers={this.state.meta.categories.count} />
+              <SummaryCard title="Views" numbers={this.state.meta.views.sum} />
+              <SummaryCard title="Images" numbers={this.state.meta.images.count} />
             </div>
           </div>
 
