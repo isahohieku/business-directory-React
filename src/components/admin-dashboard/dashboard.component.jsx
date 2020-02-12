@@ -14,12 +14,19 @@ export default class Dashboard extends Component {
   state = {
     mostRecent: [],
     mostViewed: [],
+    meta: {
+      images: 0,
+      views: 0,
+      categories: 0,
+      businesses: 0
+    },
     recentLoading: false,
     viewsLoading: false
   }
   componentDidMount() {
     this.getRecentBusiness();
     this.getMostBusinessViews();
+    this.getBusinessesMeta();
   }
 
   renderRecentLoader() {
@@ -40,10 +47,10 @@ export default class Dashboard extends Component {
         <div className="container">
           <div className="row">
             <div className="col d-flex justify-content-between">
-              <SummaryCard title="Business" numbers="200" />
-              <SummaryCard title="Categories" numbers="50" />
-              <SummaryCard title="Views" numbers="1500" />
-              <SummaryCard title="Images" numbers="500" />
+              <SummaryCard title="Businesses" numbers={this.state.meta.businesses} />
+              <SummaryCard title="Categories" numbers={this.state.meta.categories} />
+              <SummaryCard title="Views" numbers={this.state.meta.views} />
+              <SummaryCard title="Images" numbers={this.state.meta.images} />
             </div>
           </div>
 
@@ -144,6 +151,19 @@ export default class Dashboard extends Component {
         const { data } = res.data;
         this.setState({ viewsLoading: false });
         this.setState({ mostViewed: data });
+      })
+      .catch(e => console.log(e));
+  }
+
+  getBusinessesMeta() {
+    const url = `businesses/meta`;
+
+    // this.setState({ recentLoading: true });
+    getRequest(url)
+      .then(res => {
+        const { data } = res.data;
+        // this.setState({ recentLoading: false });
+        this.setState({ meta: data });
       })
       .catch(e => console.log(e));
   }
