@@ -5,9 +5,9 @@ export default function Footer() {
         <footer>
             <div className="container-fluid mt-2 pt-2">
                 <div className="row">
-                    <div className="col d-flex justify-content-between">
+                    <div className="col-12 col-md-6">
                         <nav>
-                            <ul>
+                            <ul className="d-flex justify-content-between justify-content-md-start">
                                 <li className="d-inline-block px-2"><a href="https://www.linkedin.com/in/isah-ohieku-b982a6164"
                                     className="text-primary2" target="_blank" rel="noreferrer noopener"><i className="fab fa-linkedin-in fa-3x"></i></a></li>
                                 <li className="d-inline-block px-2"><a href="https://www.github.com/isahohieku" className="text-primary2"
@@ -19,10 +19,8 @@ export default function Footer() {
                             </ul>
                         </nav>
                     </div>
-                    <div className="col d-flex align-items-center justify-content-end">
-                        <div className="pr-2">
-                            <h5 className="text-right text-primary2">&copy; {new Date().getFullYear()} Isah Ohieku - Business Directory</h5>
-                        </div>
+                    <div className="col-12 col-md-6 d-flex justify-content-center align-items-center justify-content-md-end">
+                            <h5 className="pr-2 text-primary2">&copy; {new Date().getFullYear()} Isah Ohieku - Business Directory</h5>
                     </div>
                 </div>
             </div>

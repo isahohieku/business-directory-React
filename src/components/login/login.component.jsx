@@ -92,12 +92,12 @@ class LoginPage extends Component {
         return (
             <React.Fragment>
                 {/* Wrapper div */}
-                <div className="d-flex position-relative">
-                    <div className="left w-50" style={styles.full_height}></div>
-                    <div className="right w-50"></div>
+                <div className="d-flex position-relative h-100Plus">
+                    <div className="left w-50 d-none d-md-block" style={styles.full_height}></div>
+                    <div className="right w-50 w-md-100"></div>
                     <div className="container position-absolute" style={styles.center_screen}>
                         <div className="row">
-                            <div className="col d-flex align-items-center justify-content-center" style={styles.inner_height}>
+                            <div className="col d-none d-md-flex align-items-center justify-content-center" style={styles.inner_height}>
                                 <div>
                                     {/* Favicon */}
                                     <div className="mx-auto">
@@ -107,7 +107,15 @@ class LoginPage extends Component {
                                 </div>
                             </div>
                             <div className='col d-flex align-items-center justify-content-center'>
+
                                 <div className="w-75">
+                                    <div className="d-md-none mt-4">
+                                        {/* Favicon */}
+                                        <div className="mx-auto">
+                                            <Link to="/"><img src={favicon} alt='favicon' width="150" /></Link>
+                                        </div>
+                                        <h1 className="text-primary2 font-weight-light">Business Directory</h1>
+                                    </div>
                                     <h3 className="text-left">Login</h3>
                                     <FormControl
                                         label="Email"

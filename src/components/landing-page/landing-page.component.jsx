@@ -47,7 +47,6 @@ class LandingPage extends Component {
     }
 
     makeRequest() {
-        // const url = `https://business-directory-backend.herokuapp.com/api/businesses/search?term=${this.state.searchTerm}`;
         const url = `businesses/search?term=${this.state.searchTerm}`;
 
         this.setState({ searchLoading: true });
@@ -80,12 +79,12 @@ class LandingPage extends Component {
                         {/* main */}
                         <header>
                             <div className="jumbotron2 d-flex align-items-center justify-content-center">
-                                <div className="w-75">
+                                <div className="w-100 w-md-75">
                                     {/* Favicon */}
                                     <div>
                                         <img src={favicon} alt='favicon' width="150" />
                                     </div>
-                                    <h1 className="text-light text-center mb-0" style={{ fontSize: '48px' }}>Find that business <span className="font-weight-bold">now</span>.</h1>
+                                    <h1 className="text-light text-center mb-0 findHeader" style={{ fontSize: '48px' }}>Find that business <span className="font-weight-bold">now</span>.</h1>
 
                                     {/* Autocomplete Search */}
                                     <div className="container mt-3 position-relative">
@@ -161,7 +160,7 @@ class LandingPage extends Component {
         return (
             this.state.mostRecent.map(item => {
                 return (
-                    <div key={item.id} className="col-3">
+                    <div key={item.id} className="col-10 col-md-3 mt-4 mt-md-0 mx-auto">
                         <Link to={`/business/${item.id}`}><MostRecentCard data={item} /></Link>
                     </div>
                 )

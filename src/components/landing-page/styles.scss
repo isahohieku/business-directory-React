@@ -48,3 +48,9 @@
       padding: 10px 5px;
   }
 }
+
+@media(max-width: 576px) {
+  .findHeader {
+    font-size: 15px !important;
+  }
+}
